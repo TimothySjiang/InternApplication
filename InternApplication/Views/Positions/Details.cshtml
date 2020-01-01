@@ -1,0 +1,24 @@
+﻿@model InternApplication.Models.Position
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Name</h1>
+<h4>@Model.Location</h4>
+
+<p>
+    @Html.ActionLink("APPLY FOR THIS JOB", "NewApplication", "Application", new { Id = Model.Id }, new {@class = "btn btn-primary" })
+</p>
+
+<div>
+    @Html.Raw(Model.DetailedDescription)
+</div>
+
+
+
+
+
+
+

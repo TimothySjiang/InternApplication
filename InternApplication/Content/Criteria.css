@@ -1,0 +1,15 @@
+﻿.post-criteria-editor .criteria-select {
+    list-style: none;
+    padding: 0;
+    margin: 10px,0
+}
+
+ .post-criteria-editor .criteria-select li {
+        margin: 0;
+        padding: 0;
+ }
+
+
+.post-criteria-editor .criteria-select li.template {
+        display:none;
+    }

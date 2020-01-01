@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<InternApplication.Models.Position>
+
+@{
+    ViewBag.Title = "Positions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Openings</h2>
+
+
+<table id="positions" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Positions</th>
+            <th>Intro</th>
+            <th>Department</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#positions").DataTable({
+                ajax: {
+                    url: "/api/Positions",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Name",
+                        render: function (data, type, position) {
+                            return "<a href='/Positions/Details/" + position.Id + "'>" + position.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "ShortDescription"
+                    },
+                    {
+                        data: "Department.Name"
+                    },
+                    {
+                        data: "DateAdded",
+                        render: function (data, type, row) {
+                            return moment(data).format("MM-DD-YYYY");
+                        }
+                    },
+                ]
+            });
+        });
+
+    </script>
+}

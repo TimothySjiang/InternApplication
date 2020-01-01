@@ -1,0 +1,94 @@
+﻿
+@model IEnumerable<InternApplication.Models.Position>
+
+@{
+    ViewBag.Title = "Positions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Openings</h2>
+
+<p>
+    @Html.ActionLink("New Opening", "New", "Positions", null, new { @class = "btn btn-primary" })
+</p>
+
+
+<table id="positions" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Positions</th>
+            <th>Candidates</th>
+            <th>Intro</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#positions").DataTable({
+                ajax: {
+                    url: "/api/Positions",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Name",
+                        render: function (data, type, position) {
+                            return "<a href='/Positions/edit/" + position.Id + "'>" + position.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, position) {
+                            return "<a href='/Positions/ListApplications/?"+"Id=" + position.Id + "&Name=" + position.Name + "'>" + "View Candidates" + "</a>";
+                        }
+                    },
+                    {
+                        data: "ShortDescription"
+                    },
+                    {
+                        data: "Department.Name"
+                    },
+                    {
+                        data: "DateAdded",
+                        render: function (data, type, row) {
+                            return moment(data).format("MM-DD-YYYY");
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-position-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#positions").on("click", ".js-delete", function () {
+                var button = $(this)
+                bootbox.confirm("Delete this position?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/Positions/" + button.attr("data-position-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        })
+                    }
+                })
+            });
+
+        });
+
+    </script>
+}

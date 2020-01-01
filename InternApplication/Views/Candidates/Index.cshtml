@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<InternApplication.Models.Candidate>
+
+@{
+    ViewBag.Title = "Candidates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Candidates</h2>
+
+@if (!Model.Any())
+{
+    <p>We don't have any Candidates yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Candidates</th>
+                <th>Gender</th>
+                <th>Race</th>
+                <th>Veteran Status</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var candidate in Model)
+            {
+            <tr>
+                <td>@Html.ActionLink(candidate.Name, "Details", "Candidates", new { email = candidate.Email }, null)</td>
+                <td>@candidate.Gender.Name</td>
+                <td>@candidate.Race.Name</td>
+                <td>@candidate.VerteranStatus.Name</td>
+                <td>@candidate.Email</td>
+                <td>@candidate.Phone</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+

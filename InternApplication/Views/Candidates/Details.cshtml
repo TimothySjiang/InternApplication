@@ -1,0 +1,17 @@
+﻿@model InternApplication.Models.Candidate
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+
+<ul>
+    <li>Email: @Model.Email</li>
+    <li>Phone: @Model.Phone</li>
+    <li>Current Company: @Model.CurrentCompany</li>
+    <li>LinkedIn: @Model.LinkedInURL</li>
+    <li>GitHub: @Model.GitHubURL</li>
+    <li>Porfolio: @Model.PortfolioURL</li>
+</ul>

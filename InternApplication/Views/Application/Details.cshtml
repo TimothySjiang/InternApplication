@@ -1,0 +1,24 @@
+﻿@model InternApplication.ViewModels.ApplicationDetailViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Candidate: @Model.Application.Candidate.Name</h3>
+<h4>Job Applied:@Model.Application.Position.Name </h4>
+<h4><a href="@Model.Application.ResumePath">Resume</a></h4>
+<ul>
+    <li>Gender: @Model.Application.Candidate.Gender.Name</li>
+    <li>Race: @Model.Application.Candidate.Race.Name</li>
+    <li>Veteran Status: @Model.Application.Candidate.VerteranStatus.Name</li>
+    <li>Email: @Model.Application.Candidate.Email</li>
+    <li>Phone: @Model.Application.Candidate.Phone</li>
+    <li>Current Company: @Model.Application.Candidate.CurrentCompany</li>
+    <li>LinkedIn: @Model.Application.Candidate.LinkedInURL</li>
+    <li>GitHub: @Model.Application.Candidate.GitHubURL</li>
+    <li>Porfolio: @Model.Application.Candidate.PortfolioURL</li>
+    <li>Additonal Information:@Model.Application.AddInfo </li>
+</ul>
+
+

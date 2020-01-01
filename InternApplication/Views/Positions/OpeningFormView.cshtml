@@ -1,0 +1,199 @@
+﻿@model InternApplication.ViewModels.OpeningFormViewModel
+@{
+    ViewBag.Title = "OpeningFormView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm("Post", "Positions", FormMethod.Post, new { onsubmit = "return onSubmitHandler();" }))
+{
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                @Html.LabelFor(m => m.position.Name)
+                @Html.TextBoxFor(m => m.position.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.position.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.position.Location)
+                @Html.TextBoxFor(m => m.position.Location, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.position.Location)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.position.Department)
+                @Html.DropDownListFor(m => m.position.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Department", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.position.DepartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.position.ShortDescription)
+                @Html.TextBoxFor(m => m.position.ShortDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.position.ShortDescription)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.position.DetailedDescription)
+                @Html.TextAreaFor(m => m.position.DetailedDescription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.position.DetailedDescription)
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">Actions</div>
+                <div class="panel-body">
+                    @Html.HiddenFor(m => m.position.Id)
+                    <input class="Criteria" name="position.Criteria" type="hidden" value="">
+                    @Html.AntiForgeryToken()
+                    <button type='submit' class="btn btn-primary">Save</button>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Criteria</div>
+                <div class="panel-body post-criteria-editor">
+                    <label for="new-criteria-name">Criteria,Score:(eg. Java,3)</label>
+                    <div class="input-group">
+                        <input id="new-criteria-name" type="text" class="new-criteria-name form-control">
+                        <span class="input-group-btn">
+                            <button disabled class="btn btn-primary add-criteria-button">Add</button>
+                            <button disabled class="btn btn-primary remove-criteria-button">Remove</button>
+                        </span>
+                    </div>
+
+                    <ul class="criteria-select">
+                        <li id="template" class="template">
+                            <a href="#" class="name"></a>
+                        </li>
+
+                        @for (var i = 0; i < @Model.Criteria.Length; i++)
+                        {
+                            var criterion = @Model.Criteria[i];
+                            <li id=@Html.Raw(criterion) class="selected">
+                                <a href="#" class="name">@Html.Raw(criterion) </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("position.DetailedDescription");
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            var $criteriaEditor = $(".post-criteria-editor");
+            var $removeCriteriaButton = $criteriaEditor.find(".remove-criteria-button");
+            var $addCriteriaButton = $criteriaEditor.find(".add-criteria-button");
+            var $newCriteriaName = $criteriaEditor.find(".new-criteria-name");
+            $addCriteriaButton.click(function (e) {
+                e.preventDefault();
+                addCriteria($newCriteriaName.val());
+            });
+
+            $removeCriteriaButton.click(function (e) {
+                e.preventDefault();
+                removeCriteria($newCriteriaName.val());
+            });
+
+            $newCriteriaName
+                .keyup(function () {
+                    if ($newCriteriaName.val().trim().length > 0) {
+                        $addCriteriaButton.prop("disabled", false);
+                        $removeCriteriaButton.prop("disabled", false);
+                    }
+                    else {
+                        $addCriteriaButton.prop("disabled", true);
+                        $removeCriteriaButton.prop("disabled", true);
+                    }
+                });
+
+            function addCriteria(name) {
+                $criteriaEditor
+                    .find(".criteria-select > li.template")
+                    .clone()
+                    .removeClass("template")
+                    .addClass("selected")
+                    .attr("Id", name)
+                    .find(".name").text(name).end()
+                    .appendTo($criteriaEditor.find(".criteria-select"));
+
+                $newCriteriaName.val("");
+                $addCriteriaButton.prop("disabled", true);
+                $removeCriteriaButton.prop("disabled", true);
+
+
+
+
+
+
+
+
+
+
+            };
+
+            function removeCriteria(name) {
+                $criteriaEditor
+                    .find("#" + name)
+                    .remove();
+                $newCriteriaName.val("")
+                $addCriteriaButton.prop("disabled", true)
+                $removeCriteriaButton.prop("disabled", true)
+            };
+        });
+    </script>
+
+
+    <script>
+        function onSubmitHandler() {
+            var lis = document.getElementsByClassName("selected");
+            var res = "";
+            for (var i = 0; i < lis.length - 1; i++) {
+                res += lis[i].textContent.toString();
+                res += ";"
+            }
+            res += lis[i].textContent;
+            res = res.replace(/\s+/g, '');
+
+            $(".Criteria").val(res)
+
+            return true;
+        }
+    </script>
+
+}
+
+
+<style>
+.post-criteria-editor .criteria-select {
+    list-style: none;
+    padding: 0;
+    margin: 10px,0
+}
+
+ .post-criteria-editor .criteria-select li {
+        margin: 0;
+        padding: 0;
+ }
+
+
+.post-criteria-editor .criteria-select li.template {
+        display:none;
+    }
+</style>

@@ -1,0 +1,78 @@
+﻿@model InternApplication.ViewModels.ApplicantListViewModel
+
+@{
+    ViewBag.Title = "Positions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Candidates for @Model.positionName </h2>
+
+<table id="Candidates" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Candidates</th>
+            <th>Gender</th>
+            <th>Race</th>
+            <th>Veteran Status</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Score</th>
+            <th>Date Applied</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#Candidates").DataTable({
+                ajax: {
+                    url: "/api/applications/" + @Model.positionId,
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "Candidate",
+                        render: function (data, type, application) {
+                            return "<a href='/Application/Details/" + application.Id + "'>" + application.Candidate.Name + "</a>";
+                        }
+                    },
+                    {
+                        data: "Candidate.Gender.Name",
+                    },
+                    {
+                        data: "Candidate.Race.Name",
+                    },
+                    {
+                        data: "Candidate.VerteranStatus.Name",
+                    },
+                    {
+                        data: "CandidateEmail",
+                    },
+                    {
+                        data: "Candidate.Phone",
+                    },
+                    {
+                        data: "Score",
+                    },
+                    {
+                        data: "DateApplied",
+                        render: function (data, type, row) {
+                            return moment(data).format("MM-DD-YYYY");
+                        },
+                    }
+                ]
+            });
+        });
+
+    </script>
+
+
+
+}
