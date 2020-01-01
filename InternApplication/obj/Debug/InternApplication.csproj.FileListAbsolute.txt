@@ -96,3 +96,4 @@ C:\Users\Shan\Desktop\GOODD\InterviewProject\InternApplication\InternApplication
 C:\Users\Shan\Desktop\GOODD\InterviewProject\InternApplication\InternApplication\obj\Debug\InternApplication.Migrations.Reset.resources
 C:\Users\Shan\Desktop\GOODD\InterviewProject\InternApplication\InternApplication\obj\Debug\InternApplication.csproj.GenerateResource.cache
 C:\Users\Shan\Desktop\GOODD\InterviewProject\InternApplication\InternApplication\obj\Debug\InternApplication.Migrations.SeedingAdminUser.resources
+C:\Users\Shan\Desktop\GOODD\InterviewProject\InternApplication\InternApplication\obj\Debug\InternApplication.Migrations.SeedingDropDownList.resources

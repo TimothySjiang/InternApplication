@@ -217,6 +217,10 @@
     <Compile Include="Migrations\202001010034380_SeedingAdminUser.Designer.cs">
       <DependentUpon>202001010034380_SeedingAdminUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001010110209_SeedingDropDownList.cs" />
+    <Compile Include="Migrations\202001010110209_SeedingDropDownList.Designer.cs">
+      <DependentUpon>202001010110209_SeedingDropDownList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Application.cs" />
@@ -842,6 +846,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001010034380_SeedingAdminUser.resx">
       <DependentUpon>202001010034380_SeedingAdminUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001010110209_SeedingDropDownList.resx">
+      <DependentUpon>202001010110209_SeedingDropDownList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
