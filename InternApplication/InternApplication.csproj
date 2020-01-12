@@ -231,7 +231,6 @@
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Position.cs" />
-    <Compile Include="Models\PositionDescription.cs" />
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\VeteranStatus.cs" />
